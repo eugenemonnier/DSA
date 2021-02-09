@@ -64,6 +64,14 @@ class LinkedList:
 
     return "Input value not found"
 
+  def kth(self, k):
+    if (not self.head or k > self.length or k < 0): return "Bad input"
+    curr_node = self.head
+    for x in range(self.length + 1):
+      if (self.length - x) == k: return curr_node.val
+      curr_node = curr_node.next
+
+
   def __str__(self):
       linked_string = str()
       curr_node = self.head
@@ -84,3 +92,8 @@ print(test_ll.insert_after(3,4))
 print(test_ll.insert_after(5,6))
 print(test_ll.insert_after(7,8))
 print(test_ll)
+print(test_ll.kth(0))
+print(test_ll.kth(3))
+print(test_ll.kth(7))
+print(test_ll.kth(-1))
+
