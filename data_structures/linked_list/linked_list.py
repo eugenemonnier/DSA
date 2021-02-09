@@ -82,10 +82,29 @@ class LinkedList:
       linked_string += str(curr_node.val) + ' -> None'
       return linked_string
 
+def ll_zip(ll1, ll2):
+  zipped = LinkedList()
+  ll1_node = ll1.head
+  ll2_node = ll2.head
+
+  while ll1_node or ll2_node:
+    if ll1_node:
+      zipped.append(ll1_node.val)
+      ll1_node = ll1_node.next
+    if ll2_node: 
+      zipped.append(ll2_node.val)
+      ll2_node = ll2_node.next
+  return zipped
+
+
 test_ll = LinkedList()
+test_ll2 = LinkedList()
 test_ll.append(1)
+test_ll2.append(1)
 test_ll.append(3)
+test_ll2.append(3)
 test_ll.append(5)
+test_ll2.append(5)
 print(test_ll.insert_before(3,2))
 print(test_ll.insert_before(11,12))
 print(test_ll.insert_after(3,4))
@@ -97,3 +116,4 @@ print(test_ll.kth(3))
 print(test_ll.kth(7))
 print(test_ll.kth(-1))
 
+print(ll_zip(test_ll, test_ll2))
