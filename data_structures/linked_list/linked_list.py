@@ -3,8 +3,7 @@ class Node:
       self.val = val
       self.next = next
   def __str__(self):
-    node_str = "Node: "
-    node_str += str(self.val)
+    node_str = str(self.val)
     node_str += " -> "
     node_str += str(self.next)
     return node_str
@@ -23,6 +22,13 @@ class LinkedList:
         curr_node = curr_node.next
       curr_node.next = node
       self.length += 1
+
+  def insert(self, val):
+    node = Node(val)
+    node.next = self.head
+    self.head = node
+    self.length += 1
+    return self.head
 
   def insert_before(self, val, new_val):
     node = Node(new_val)
@@ -96,6 +102,14 @@ def ll_zip(ll1, ll2):
       ll2_node = ll2_node.next
   return zipped
 
+def reverse_ll (ll):
+  reversed_ll = LinkedList()
+  curr_node = ll.head
+  while curr_node:
+    reversed_ll.insert(curr_node.val)
+    curr_node = curr_node.next
+  return reversed_ll
+
 
 test_ll = LinkedList()
 test_ll2 = LinkedList()
@@ -116,4 +130,7 @@ print(test_ll.kth(3))
 print(test_ll.kth(7))
 print(test_ll.kth(-1))
 
-print(ll_zip(test_ll, test_ll2))
+zipped = ll_zip(test_ll, test_ll2)
+print(zipped)
+print(test_ll.insert(0))
+print(reverse_ll(test_ll))
