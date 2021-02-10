@@ -7,6 +7,19 @@ class Node:
 class BinaryTree:
   def __init__(self):
       self.root = None
+    
+  def __str__(self, branch = 1):
+        if not self.root: return 'None'
+        self.result = f'({self.root.val})\n'
+        def traverse(node, branch):
+
+            self.result +=  '\t' * branch + '└── (' + str(node.val) + ')\n'
+            if node.left: traverse(node.left, branch + 1)
+            if node.right: traverse(node.right, branch + 1)
+            return self.result
+        if self.root.left: traverse(self.root.left, branch)
+        if self.root.right: traverse(self.root.right, branch)
+        return f'{self.result}'
   
   def pre_order(self):
     nodes = list()
@@ -96,13 +109,35 @@ class BinarySearchTree(BinaryTree):
         else: return False
       else: return True
 
+def fizz_buzz_tree(tree):
+  fizzbuzz_tree = BinaryTree()
+  if not tree.root: return fizzbuzz_tree
+  fizzbuzz_tree.root = happy_fizzbuzz_tree_helper(tree.root)
+  return fizzbuzz_tree
+
+def happy_fizzbuzz_tree_helper(node):
+    if not node: return None
+    fizz_val = fizzify(node.val)
+    fizz_node = Node(fizz_val)
+    fizz_node.left = happy_fizzbuzz_tree_helper(node.left)
+    fizz_node.right = happy_fizzbuzz_tree_helper(node.right)
+    return fizz_node
+
+def fizzify(val):
+  if val % 15 == 0: val = "fizzbuzz"
+  elif val % 3 == 0: val = "fizz"
+  elif val % 5 == 0: val = "buzz"
+  else: val = str(val)
+  return (val)
+
 test_tree = BinarySearchTree()
 test_tree.add(10)
 test_tree.add(5)
 test_tree.add(14)
 test_tree.add(15)
-test_tree.add(11)
-test_tree.add(1)
+test_tree.add(3)
+test_tree.add(9)
+print(test_tree)
 print(test_tree.pre_order())      
 print(test_tree.in_order())      
 print(test_tree.post_order())      
@@ -121,3 +156,5 @@ test_tree2.root.right = Node(5)
 test_tree2.root.right.right = Node(9)
 test_tree2.root.right.right.left = Node(4)
 print(test_tree2.breadth_first())
+
+print(fizz_buzz_tree(test_tree))
