@@ -51,7 +51,18 @@ class BinaryTree:
       if node.val > max_val: max_val = node.val
       if node.right: max_val = self.happy_tree_friend(node.right, max_val)
       return max_val
-    
+
+  def breadth_first(self):
+    queue, nodes = list(), list()
+    if not self.root: return nodes
+    queue.append(self.root)
+    while len(queue):
+      current = queue[0]
+      if current.left: queue.append(current.left)
+      if current.right: queue.append(current.right)
+      nodes.append(queue[0].val)
+      queue.pop(0)
+    return nodes
 
 class BinarySearchTree(BinaryTree):
   def __init__(self):
@@ -98,3 +109,15 @@ print(test_tree.post_order())
 print(test_tree.contains(15))
 print(test_tree.contains(13))
 print(test_tree.find_max_val())
+
+test_tree2 = BinarySearchTree()
+test_tree2.root = Node(2)
+test_tree2.root.left = Node(7)
+test_tree2.root.left.left = Node(2)
+test_tree2.root.left.right = Node(6)
+test_tree2.root.left.right.left = Node(5)
+test_tree2.root.left.right.right = Node(11)
+test_tree2.root.right = Node(5)
+test_tree2.root.right.right = Node(9)
+test_tree2.root.right.right.left = Node(4)
+print(test_tree2.breadth_first())
