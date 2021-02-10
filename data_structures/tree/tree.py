@@ -42,6 +42,17 @@ class BinaryTree:
     happy_tree_friend(self.root)
     return nodes
 
+  def find_max_val(self):
+        return self.happy_tree_friend(self.root)
+
+  def happy_tree_friend(self, node, max_val = float('-inf')):
+      if not node: return max_val
+      if node.left: max_val = self.happy_tree_friend(node.left, max_val)
+      if node.val > max_val: max_val = node.val
+      if node.right: max_val = self.happy_tree_friend(node.right, max_val)
+      return max_val
+    
+
 class BinarySearchTree(BinaryTree):
   def __init__(self):
       super().__init__()
@@ -86,3 +97,4 @@ print(test_tree.in_order())
 print(test_tree.post_order())      
 print(test_tree.contains(15))
 print(test_tree.contains(13))
+print(test_tree.find_max_val())
