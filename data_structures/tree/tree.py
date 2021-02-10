@@ -130,6 +130,19 @@ def fizzify(val):
   else: val = str(val)
   return (val)
 
+def sum_odd_tree(tree):
+  if not tree.root: return 0
+  tree_sum = odd_tree_helper(tree.root)
+  return tree_sum
+
+def odd_tree_helper(node):
+  tree_sum = 0
+  if not node: return tree_sum
+  if node.val % 2 == 1: tree_sum += node.val
+  tree_sum += odd_tree_helper(node.left)
+  tree_sum += odd_tree_helper(node.right)
+  return tree_sum
+
 test_tree = BinarySearchTree()
 test_tree.add(10)
 test_tree.add(5)
@@ -158,3 +171,5 @@ test_tree2.root.right.right.left = Node(4)
 print(test_tree2.breadth_first())
 
 print(fizz_buzz_tree(test_tree))
+print(sum_odd_tree(test_tree2))
+print(sum_odd_tree(test_tree))
