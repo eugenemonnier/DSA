@@ -143,6 +143,20 @@ def odd_tree_helper(node):
   tree_sum += odd_tree_helper(node.right)
   return tree_sum
 
+def tree_intersection(tree1, tree2):
+  output = []
+  if not tree1.root or not tree2.root: return output
+  output = tree_intersection_helper(tree1.root, tree2.root, output)
+  return output
+
+def tree_intersection_helper(node1, node2, output):
+  if not node1: return output
+  if node1.val == node2.val: output.append(node1.val)
+  output = tree_intersection_helper(node1.left, node2.left, output)
+  output = tree_intersection_helper(node1.right, node2.right, output)
+  return output
+
+
 test_tree = BinarySearchTree()
 test_tree.add(10)
 test_tree.add(5)
@@ -173,3 +187,31 @@ print(test_tree2.breadth_first())
 print(fizz_buzz_tree(test_tree))
 print(sum_odd_tree(test_tree2))
 print(sum_odd_tree(test_tree))
+
+test_treeA = BinarySearchTree()
+test_treeA.root = Node(150)
+test_treeA.root.left = Node(100)
+test_treeA.root.left.left = Node(75)
+test_treeA.root.left.right = Node(160)
+test_treeA.root.left.right.left = Node(125)
+test_treeA.root.left.right.right = Node(175)
+test_treeA.root.right = Node(250)
+test_treeA.root.right.left = Node(200)
+test_treeA.root.right.right = Node(350)
+test_treeA.root.right.right.left = Node(300)
+test_treeA.root.right.right.right = Node(500)
+
+test_treeB = BinarySearchTree()
+test_treeB.root = Node(42)
+test_treeB.root.left = Node(100)
+test_treeB.root.left.left = Node(15)
+test_treeB.root.left.right = Node(160)
+test_treeB.root.left.right.left = Node(125)
+test_treeB.root.left.right.right = Node(175)
+test_treeB.root.right = Node(600)
+test_treeB.root.right.left = Node(200)
+test_treeB.root.right.right = Node(350)
+test_treeB.root.right.right.left = Node(4)
+test_treeB.root.right.right.right = Node(500)
+
+print(tree_intersection(test_treeA, test_treeB))
