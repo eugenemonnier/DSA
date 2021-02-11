@@ -81,7 +81,7 @@ class Graph:
     if len(self.nodes) == 0: return ValueError('Graph does not contain nodes.')
     visited, output = {}, []
     for nodes in self.nodes: visited[nodes] = False
-    if not node in visited.keys(): return ValueError('Node does not exist in graph.')
+    if not node in visited.keys(): return ValueError(node +' does not exist.')
     self.depth_first_helper(node, visited, output)
     return output
 
@@ -93,6 +93,24 @@ class Graph:
       for neighbor in neighbors: self.depth_first_helper(neighbor['node'], visited, output)
     return output
 
+  def connected(self, nodeA, nodeB):
+    if len(self.nodes) == 0: return ValueError('Graph does not contain nodes.')
+    queue, visited = Queue(), dict()
+    for node in self.adjacencies.keys(): visited[node] = False
+    if not nodeA in visited.keys(): return ValueError(nodeA + ' does not exist.')
+    if not nodeB in visited.keys(): return ValueError(nodeB + ' does not exist.')
+    queue.enqueue(nodeA)
+    while not queue.is_empty():
+      queued_node = queue.dequeue()
+      neighbor_list = self.adjacencies.get(queued_node)
+      for neighbors in neighbor_list:
+        neighbor = neighbors.get('node')
+        if nodeB in neighbor: return True
+        if not visited[neighbor]:
+          visited[neighbor] = True
+          queue.enqueue(neighbor)
+    return False
+          
 
 test_graph = Graph()
 test_graph.add_node('A')
@@ -134,6 +152,7 @@ graph.add_node('Starkiller Base')
 graph.add_node('Kijimi')
 graph.add_node('Kef Bir')
 graph.add_node('Exegol')
+graph.add_node('Earth')
 graph.add_edge('Jakku', 'Takodana', 200)
 graph.add_edge('Kijimi', 'Takodana', 300)
 graph.add_edge('Jakku', 'Starkiller Base', 300)
@@ -146,3 +165,12 @@ print('Happy Path:')
 print(graph.depth_first('Jakku'))
 print('Invalid Node:')
 print(graph.depth_first('Alderaan'))
+
+print("Connected Test")
+print("Happy Path")
+print(graph.connected('Jakku', 'Kijimi'))
+print("Node Does Not Exist")
+print(graph.connected('Jakku', 'Alderaan'))
+print('Not Connected Returns False:')
+print(graph.connected('Exegol', 'Earth'))
+
